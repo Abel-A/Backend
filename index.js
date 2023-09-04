@@ -1,6 +1,7 @@
 const express = require('express')
 var morgan = require('morgan')
 const cors = require('cors')
+const Person = require('./database/mongo')
 
 const app = express()
 const PORT = process.env.PORT || 3001
@@ -8,8 +9,8 @@ const PORT = process.env.PORT || 3001
 app.use(express.static('dist'))
 
 app.use(express.json())
-morgan.token('body', function getBody (request, response) {
-    return(JSON.stringify(request.body))
+morgan.token('body', function getBody(request, response) {
+    return (JSON.stringify(request.body))
 })
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 app.use(cors())
@@ -40,9 +41,9 @@ let persons = [
 
 
 app.get('/api/persons', (request, response) => {
-    if (persons) {
-        response.json(persons)
-    }
+    Person.find({}).then(persons => {
+        response.json(person)
+    })
 })
 app.get('/api/persons/:id', (request, response) => {
 
@@ -95,14 +96,13 @@ app.post('/api/persons', (request, response) => {
     }
 
     else {
-        const person = {
-            "id": Math.floor(Math.random() * 10000),
-            "name": data.name,
-            "number": data.number
-        }
-
-        persons = persons.concat(person)
-        response.json(person)
+        const person = new Person({
+            name: data.name,
+            number: data.number
+        })
+        person.save().then(savedPerson => {
+            response.json(savedPerson)
+        })
     }
 })
 
