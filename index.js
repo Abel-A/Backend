@@ -25,6 +25,7 @@ app.get('/api/persons', (request, response, next) => {
         response.json(people)
     }).catch(error => next(error))
 })
+
 app.get('/api/persons/:id', (request, response, next) => {
 
 
@@ -69,11 +70,11 @@ app.post('/api/persons', (request, response, next) => {
         number: body.number,
     })
 
-    person._id = body.id
-
     person.save().then(savedPerson => {
         response.json(savedPerson)
     }) .catch(error => next(error))
+
+
 })
 
 
@@ -85,8 +86,6 @@ app.put('/api/persons/:id', (request, response, next) => {
         name: body.name,
         number: body.number,
     }
-
-    person._id = body.id
 
     Person.findByIdAndUpdate(request.params.id, person, { new: true })
         .then(updatedNote => {
