@@ -59,6 +59,10 @@ app.delete('/api/persons/:id', (request, response, next) => {
 })
 
 app.post('/api/persons', (request, response, next) => {
+
+    console.log(`request parameter ${request.params}`)
+    console.log(`response body ${response.body}`)
+
     const body = request.body
 
     if (body.name === undefined) {
