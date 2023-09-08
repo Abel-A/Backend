@@ -1,14 +1,14 @@
-require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
+require('dotenv').config();
 
 const mongoose = require('mongoose')
 
 mongoose.set('strictQuery', false)
 
-const url = process.env.MONGODB_URI
+const uri = process.env.MONGODB_URI
 
-console.log('connecting to', url)
+console.log('connecting to', uri)
 
-mongoose.connect(url, {useNewUrlParser: true})
+mongoose.connect(uri, {useNewUrlParser: true})
     .then(result => {
         console.log('connected to MongoDB')
     })
