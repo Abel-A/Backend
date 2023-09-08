@@ -48,7 +48,6 @@ app.get('/info', (request, response, next) => {
 })
 
 app.delete('/api/persons/:id', (request, response, next) => {
-    console.log(`entered delete`)
 
     Person.findByIdAndRemove(request.params.id)
         .then(result => {
@@ -60,8 +59,6 @@ app.delete('/api/persons/:id', (request, response, next) => {
 
 app.post('/api/persons', (request, response, next) => {
 
-    console.log(`request parameter ${request.params}`)
-    console.log(`response body ${response.body}`)
 
     const body = request.body
 
